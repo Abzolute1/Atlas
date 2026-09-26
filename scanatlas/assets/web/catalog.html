@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' qrc:; script-src 'self' qrc: 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'none'">
+<title>Atlas</title><link rel="stylesheet" href="catalog.css"></head><body>
+<header class="top">
+ <button class="brand" onclick="scope('')" aria-label="Atlas home"><img src="../scanatlas.svg" alt=""><span>Atlas<small>ASSET LIBRARY</small></span></button>
+ <div class="search"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="7"></circle><path d="m15 15 6 6"></path></svg><input id="search" placeholder="Search assets, materials, characters…" aria-label="Search assets"><kbd id="searchhint">Ctrl F</kbd><button id="searchclear" class="search-clear" onclick="clearQuery()" aria-label="Clear search" hidden>×</button></div>
+ <nav class="topnav" aria-label="Library tools"><button id="unityproject" class="btn quiet" onclick="send('unity_configure')">Connect Unity</button><button class="btn quiet" onclick="send('sources')">Sources</button><button class="btn quiet" onclick="send('mixamo')">Mixamo ↗</button><button class="btn" onclick="send('import')">+ Import</button></nav>
+</header>
+<div class="layout">
+ <aside aria-label="Catalog navigation">
+  <div class="section">LIBRARY</div>
+  <button class="nav active" data-scope="" onclick="scope('')">All assets <span id="allcount" class="count"></span></button>
+  <button class="nav" data-scope="my-assets" onclick="scope('my-assets')">My assets <span>◇</span></button>
+  <button class="nav" data-scope="favorites" onclick="scope('favorites')">Favorites <span>♡</span></button>
+  <button class="nav" data-scope="downloaded" onclick="scope('downloaded')">On this computer <span>↓</span></button>
+  <div class="section" title="Counts are totals. Click to browse a whole category.">ASSET TYPES</div><div id="categories"></div>
+  <div class="section">COLLECTIONS</div><div id="collections"></div><button class="nav" onclick="send('save_collection',{...state})">+ Save current search</button>
+  <div class="section">SOURCES</div><div id="sources"></div>
+  <div class="sidefoot">Previews cached as you browse.<br>Asset files download on request.<br><button class="muted" onclick="send('sync')">↻ Refresh asset catalogs</button><br><button class="muted" onclick="send('sync_mixamo')">↻ Refresh Mixamo catalog</button></div>
+ </aside>
+ <main class="main">
+  <div class="toolbar" aria-label="Search filters">
+   <div class="types"><button id="typebutton" class="btn" onclick="$('typemenu').classList.toggle('open')">All asset types ▾</button><div class="typemenu" id="typemenu"></div></div>
+   <select id="subtype" aria-label="Category filter" onchange="filterSubtype(this.value)"><option value="">All categories</option></select>
+   <select id="provider" aria-label="Source filter" onchange="state.source=this.value;state.offset=0;load()"><option value="">All sources</option></select>
+   <button class="btn quiet" onclick="reset()">Reset filters</button>
+   <select id="sort" aria-label="Sort results" onchange="state.offset=0;load()"><option>Relevance</option><option>Name A–Z</option><option>Name Z–A</option><option>Highest resolution</option></select>
+  </div>
+  <div class="titlebar"><div><h1 id="title">All assets</h1><p id="summary">Loading your catalog…</p></div><div id="activefilters" class="activefilters"></div></div>
+  <div id="grid" class="grid" aria-label="Asset results"></div>
+  <div id="activity" class="activity" hidden><div class="progress-heading"><span id="activitylabel"></span><strong id="activitypercent"></strong></div><progress id="activitybar" max="100" aria-label="Current task progress"></progress><div id="activitydetail" class="progress-detail"></div></div>
+  <footer class="foot"><span id="status">Local search · connected catalogs</span><div class="pages"><button id="prev" onclick="page(-1)" aria-label="Previous page">← Previous</button><span id="pagination"></span><button id="next" onclick="page(1)" aria-label="Next page">Next →</button></div></footer>
+ </main>
+ <section class="details" id="details" aria-label="Asset details"><div class="empty">Select an asset to see its<br>preview and download options.</div></section>
+</div><div class="toast" id="toast" role="status"></div>
+<script src="qrc:///qtwebchannel/qwebchannel.js"></script><script src="catalog.js"></script>
+</body></html>

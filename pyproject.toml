@@ -1,0 +1,19 @@
+[project]
+name = "atlas-catalog"
+version = "0.6.2"
+description = "Native metadata-first Megascans catalog"
+requires-python = ">=3.12"
+dependencies = ["PySide6>=6.8,<7", "ijson>=3.3", "zstandard>=0.23", "requests>=2.32"]
+[project.scripts]
+atlas = "scanatlas.agent:main"
+atlas-desktop = "scanatlas.app:main"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+[tool.pytest.ini_options]
+pythonpath = ["."]
+[dependency-groups]
+dev = ["pytest>=9"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["scanatlas"]

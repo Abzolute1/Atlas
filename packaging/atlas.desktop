@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Atlas
+Comment=Asset catalog with agent search and vision previews
+Exec=/usr/local/bin/atlas-desktop
+Icon=/usr/share/pixmaps/atlas.png
+Terminal=false
+Categories=Graphics;3DGraphics;
+Keywords=Megascans;Quixel;Assets;Unity;Catalog;
+StartupWMClass=Atlas
